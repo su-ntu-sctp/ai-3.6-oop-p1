@@ -1,3 +1,19 @@
+# Lesson: Introduction to Object-Oriented Programming (OOP) in Java
+
+# Lesson Overview  
+
+This lesson introduces the core principles of Object-Oriented Programming (OOP) in Java. Learners will move from basic variables and methods to designing reusable classes with attributes, constructors, and encapsulation. The lesson also covers `static` members, overriding `toString()`, and data modeling using POJOs and records through hands-on examples like `Car` and `VendingMachine`.
+
+# Lesson Objectives  
+
+- Understand the purpose of classes and objects in organizing code.  
+- Create and use constructors, including overloaded and copy types.  
+- Apply encapsulation with private fields, getters, and setters.  
+- Differentiate instance and static members and their usage.  
+- Override `toString()` for better object representation.  
+- Model data using POJOs and records in practical exercises.
+
+
 ## Part 1: Class Attributes and Methods
 
 Create an `App.java` and code along.
