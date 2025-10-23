@@ -1,4 +1,4 @@
-# Lesson: Introduction to Object-Oriented Programming (OOP) in Java
+# Lesson: Introduction to Object-Oriented Programming (OOP) 
 
 # Lesson Overview  
 
