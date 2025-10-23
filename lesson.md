@@ -1,837 +1,624 @@
-## Object Oriented Programming
+## Part 1: Class Attributes and Methods
 
-Object Oriented Programming (OOP) is a programming paradigm that is based on the concept of objects. It is a way of organizing code into objects that have state (attributes) and behavior (methods).
+Create an `App.java` and code along.
 
-OOP is based on 4 principles:
+We had been defining variables and methods previously in our code.
 
-- Encapsulation
-- Inheritance
-- Polymorphism
-- Abstraction
-
-## Part 1: Encapsulation
-
-### What is Encapsulation?
-
-As explained in the previous lesson, encapsulation is
-
-- Bundling of behaviours and attributes on a single object
-- Hiding fields and some methods from public access
-
-By setting fields to private, we are hiding them from public access. We can then provide public methods to access and modify the fields.
-
-Let's define a `Person` class.
-
-```java
-public class Person {
-
-  // FIELDS
-  private String name;
-  private int birthYear;
-
-  // CONSTRUCTORS
-  public Person() {
-  }
-
-  public Person(String name, int birthYear) {
-    this.name = name;
-    this.birthYear = birthYear;
-  }
-
-  // INSTANCE METHODS
-  public void greet() {
-    System.out.println("👋 Hello, my name is " + this.name + " and I am a " + (2023 - this.birthYear) + " year old person.");
-  }
-
-  public void doWork() {
-    System.out.println(this.name + " is working.");
-  }
-
-  // GETTERS AND SETTERS
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public int getBirthYear() {
-    return this.birthYear;
-  }
-
-  public void setBirthYear(int birthYear) {
-    this.birthYear = birthYear;
-  }
-}
-
-```
-
-In this way, we can protect the fields from accidental changes and misuse.
-
-For example we could prevent setting a negative age for a person.
-
-```java
-public void setBirthYear(int birthYear) {
-  if (birthYear < 1900 || birthYear > 2021) {
-    System.out.println("Invalid birth year.");
-    return;
-  }
-  this.birthYear = birthYear;
-}
-```
-
-If the `birthYear` field is public, we cannot prevent the user from setting an invalid value.
-
-Create `App.java` and test this
-
-```java
-Person person = new Person("Tony Stark", 1975);
-person.setBirthYear(0);
-person.greet();
-person.doWork();
-```
-
-The users of our public methods do not need to know how the method works. Even if we were to make some internal changes, the user would not be affected.
-
-For example, if we were to change the criteria for a valid birth year, we would only need to change the `setBirthYear` method. The user would not need to change their code.
-
-```java
-public void setBirthYear(int birthYear) {
-  // if (birthYear < 1900 || birthYear > 2021) {
-  if (birthYear < 1970 || birthYear > 2020) {
-    System.out.println("Invalid birth year.");
-    return;
-  }
-  this.birthYear = birthYear;
-}
-```
-
----
-
-## Part 2: Inheritance
-
-### What is Inheritance?
-
-Inheritance is organizing code into a parent-child hierarchy so that the child can inherit the properties and methods of the parent.
-
-Take for example, a `Person` class. It is the base class of a hierarchy of classes for other child classes such as `Student`, `Teacher`, `Employee`, `Janitor` etc.
-
-### Creating a child class
-
-Let's create a `Student` class that inherits from the `Person` class. To do that, we use the `extends` keyword.
-
-By inheriting from the `Person` class, the `Student` class will inherit all the fields and methods of the `Person` class. The `Person` class is also known as the **parent** class or **super** class. The `Student` class is also known as the **child** class or **sub** class.
-
-In addition, we want to make `Student` different by declaring fields and methods specific to it.
-
-```java
-public class Student extends Person {
-  private int studentId;
-  private String course;
-  private int yearEnrolled;
-  private ArrayList<Double> grades;
-
-  public Student(int studentId, String course, int yearEnrolled) {
-    this.studentId = studentId;
-    this.course = course;
-    this.yearEnrolled = yearEnrolled;
-    this.grades = new ArrayList<Double>();
-  }
-
-
-  // add getters and setters
-
-  // add methods specific to Student
-  public void addGrade(double grade) {
-    this.grades.add(grade);
-  }
-
-  public double getAverageGrade() {
-    double sum = 0;
-    for (double grade : this.grades) {
-      sum += grade;
-    }
-    return sum / this.grades.size();
-  }
-}
-```
-
-Note that a class may only extend from one parent class as Java does not support multiple inheritance.
-
-```java
-// ❌ This is not allowed
-public class Student extends Person, Human {
-  // ...
-}
-```
-
-Let's modify our `greet()` method to show the class calling the method.
-
-```java
-public void greet() {
-  System.out.println("👋 Hello, my name is " + this.name + " and I am a " + (2023 - this.birthYear) + " year old " + this.getClass().getSimpleName().toLowerCase() + ".");
-}
-```
-
-Now we can test our `Student` class.
+Let's define some variables to represent a person and `static` methods to greet and eat.
 
 ```java
 public class App {
   public static void main(String[] args) {
-    // Instantiating a Student object
-    Student student = new Student(1, "Computer Science", 2022);
 
-    // Calling methods from the Person (Parent) class
-    student.setName("Tony");
-    student.setBirthYear(1995);
-    student.greet();
-    student.doWork();
+    String name1 = "Tony Stark";
+    int age1 = 35;
+    String gender1 = "male";
+    boolean isMarried1 = true;
 
-    // Calling methods from the Student (Child) class
-    System.out.println("I am studying " + student.getCourse());
-    student.addGrade(80);
-    student.addGrade(90);
-    System.out.println("My average grade is " + student.getAverageGrade());
+    String name2 = "Bruce Banner";
+    int age2 = 36;
+    String gender2 = "male";
+    boolean isMarried2 = false;
+
+    greet(name1, age1, gender1, isMarried1);
+    eat(name1, "burger");
+
+    greet(name2, age2, gender2, isMarried2);
+    eat(name2, "pizza");
+  }
+
+  public static void greet(String name, int age, String gender, boolean isMarried) {
+    System.out.println("Hello world, I'm " + name + " and I'm a " + age + " year old " + gender + ".");
+  }
+
+  public static void eat(String name, String meal) {
+    System.out.println(name + " is currently eating " + meal);
+  }
+}
+
+```
+
+If you observe the above code, these variables are related to each other. They are all attributes of a person.
+
+We can group them together in a class so that we can create multiple objects of the same type. This is easier than having to define variables separately for each person. More importantly, this will make our code more organized and easier to maintain.
+
+### Class
+
+A class is a blueprint for creating objects. It defines the attributes and methods that an object will have.
+
+There can only be one public class in a file. The name of the file should match the name of the public class.
+
+Create a `Person.java` file and define a `Person` class.
+
+```java
+public class Person {
+
+}
+```
+
+#### Access Modifiers for Classes
+
+Classes also have access modifiers. The access modifier controls the visibility of the class.
+
+| Access Keyword | Description                        |
+| -------------- | ---------------------------------- |
+| `public`       | accessible from anywhere           |
+| blank          | accessible from within the package |
+
+### Methods and Attributes
+
+When we talk about objects in the real world e.g. a car, a dog, a house, etc. we can describe it in terms of its **state** and its **behaviour**.
+
+For example, a dog has state like its color, weight, breed, etc. It also has behaviours like bark, eat, run and play.
+
+In Java, the state of an object is represented by its **attributes** and its behaviour is represented by its **methods**.
+
+Let's add some attributes and methods to our Person class.
+
+```java
+public class Person {
+
+  String name;
+  int age;
+  String gender;
+  boolean isMarried;
+
+  public void greet() {
+    System.out.println("Hello world, I'm " + name + " and I'm a " + age + " year old " + gender + ".");
+  }
+
+  public void eat(String meal) {
+    System.out.println(name + " is currently eating " + meal);
   }
 }
 ```
 
-The `Student` instance has access to all the `public` methods of the `Person` class.
-
-Currently, we have to manually initialize the `name` and `age` fields using the setter methods because they are in the `Person` class. We can improve this by calling a constructor that accepts those values as well.
-
-But how do we initialize these values since the `Student` class does not have these fields?
-
-### `super` keyword
-
-The `super` keyword is like `this` but it refers to the parent class. It can be used to call the parent class constructor. Recall that the parent class is also known as the **super** class, hence that is what calling `super()` does.
-
-Currently we are not using `super` yet but the `Student` class has default values for the `name` and `age` fields. This is because Java automatically called `super()` for us implicitly.
+We can instantiate the `Person` class in our `main` method and invoke the instance methods.
 
 ```java
-public Student(int studentId, String course, int yearEnrolled) {
-  super(); // This calls Person()
-  this.studentId = studentId;
-  this.course = course;
-  this.yearEnrolled = yearEnrolled;
-  this.grades = new ArrayList<Double>();
-}
-```
+public class App {
+  public static void main(String[] args) {
+    Person personA = new Person();
 
-`super()` calls the no-argument constructor of the parent class when there are no arguments passed in. If we want to call a different constructor, we can do so by passing in the arguments. In this case we want to call the `Person` constructor that accepts `name` and `birthYear`.
+    personA.greet();
+    personA.eat("burger");
 
-Our student constructor will also take in `name` and `birthYear` as arguments. The `name` and `birthYear` will be passed to the `Person` constructor using `super(name, birthYear)`.
-
-```java
-public Student(String name, int birthYear, int studentId, String course, int yearEnrolled) {
-  super(name, birthYear); // This calls Person(String name, int birthYear)
-  this.studentId = studentId;
-  this.course = course;
-  this.yearEnrolled = yearEnrolled;
-  this.grades = new ArrayList<Double>();
-}
-```
-
-Note that we cannot call `super()` and `this()` in the same constructor. This is because both `super()` or `this()` must be the first statement in the constructor.
-
-```java
-public Student(String name, int birthYear, int studentId, String course, int yearEnrolled) {
-  super(name, age); // This calls Person(String name, int age)
-  this(studentId, course, yearEnrolled); // ❌ This is not allowed
-}
-```
-
-Back to our `main`, we can now pass in the `name` and `birthYear` to the `Student` constructor.
-
-```java
-Student student = new Student("Tony", 1995, 1, "Computer Science", 2022);
-
-// Calling methods from the Person (Parent) class
-// student.setName("Tony");
-// student.setBirthYear(1995);
-student.greet();
-student.doWork();
-
-// Calling methods from the Student (Child) class
-System.out.println("I am studying " + student.getCourse());
-student.addGrade(80);
-student.addGrade(90);
-System.out.println("My average grade is " + student.getAverageGrade());
-```
-
-### The `protected` access modifier
-
-In an earlier lesson we had mentioned about the `protected` access modifier. The `protected` access modifier allows the field to be accessed by the child class.
-
-Let's add another method to `Student`.
-
-```java
-public void attendClass() {
-  System.out.println(this.name + " is attending class.");
-}
-```
-
-Notice that we cannot access it directly in the `Student` class. This is because the `name` field is declared in the `Person` class. We can only access it using the `getName()` method.
-
-```java
-public void attendClass() {
-  System.out.println(this.getName() + " is attending class.");
-}
-```
-
-If we want to access the `name` field directly, we can use the `protected` access modifier. The `protected` access modifier allows the field to be accessed by the child class.
-
-```java
-protected String name;
-```
-
-### 👨‍💻 Activity: Inheritance
-
-Create a `Teacher` class that inherits from the `Person` class.
-
-The `Teacher` class should have the following fields:
-
-```java
-private int teacherId;
-private String subject;
-private double salary;
-```
-
-Example test code:
-
-```java
-Teacher teacher = new Teacher("John", 1975, 1, "Mathematics", 5000);
-// Calling Parent class methods
-teacher.greet();
-teacher.doWork();
-// Calling Child class methods
-System.out.println("I teach " + teacher.getSubject());
-System.out.println("My salary is " + teacher.getSalary());
-```
-
-## Part 3: Polymorphism
-
-### What is Polymorphism?
-
-Polymorphism means many forms i.e. the ability of a method to have different behaviours in different situations.
-
-There are 2 types of polymorphism:
-
-1. Static or compile-time polymorphism
-2. Dynamic or run-time polymorphism
-
-### Compile-time Polymorphism
-
-Compile-time polymorphism is also known as **method overloading**. It occurs when there are multiple methods with the same name but different parameters.
-
-It is called compile-time polymorphism because the compiler determines which method to call based on the number and type of arguments passed in.
-
-```java
-public class Calculator {
-  public int add(int num1, int num2) {
-    return num1 + num2;
-  }
-
-  public int add(int num1, int num2, int num3) {
-    return num1 + num2 + num3;
-  }
-
-  public double add(double num1, double num2) {
-    return num1 + num2;
   }
 }
 ```
 
-The `add()` method is overloaded 3 times. The compiler will determine which method to call based on the number and type of arguments passed in.
+Observe the output. Is the result expected?
+
+---
+
+## Part 2: Constructors
+
+A **constructor** is a special method that is called when an object is instantiated i.e. when the `new` keyword is used. The purpose of a constructor is to initialize values for the newly created object.
+
+A constructor:
+
+- is defined using the same syntax as a method
+- does not have a return type.
+- name must be the same as the class name.
+
+Currently, we do not have a constructor defined in our `Person` class. But Java provides a default constructor that does not take in any parameters - this is called the **no-argument constructor**. Since there are no arguments, this constructor will initialize the attributes to their default values.
+
+This is why we could instantiate the `Person` object without any errors. However, the attributes are not initialized to the values that we want.
+
+We could also explicitly declare the no-argument constructor in our class.
 
 ```java
-Calculator calculator = new Calculator();
-System.out.println(calculator.add(1, 2)); // 3
-System.out.println(calculator.add(1, 2, 3)); // 6
-System.out.println(calculator.add(1.5, 2.5)); // 4.0
-```
+public class Person {
 
-Let's **overload** the `doWork()` method in `Student` class by accepting a `String` argument.
+  // Explicitly declaring the no-argument constructor
+  public Person() {
 
-```java
-public void doWork(String work) {
-  System.out.println(this.name + " is doing " + work);
+  }
+
 }
 ```
 
-And run it in `main`.
+Let's add a **parameterized constructor** to our `Person` class.
+
+This can be done by right-clicking in VSCode, "Source Action", "Generate Constructors".
 
 ```java
-student.doWork("homework");
-```
-
-### Runtime Polymorphism
-
-Runtime polymorphism is also known as **method overriding**. It occurs when a child class overrides a method of the parent class.
-
-It is called runtime polymorphism because the JVM determines which method to call based on the object type.
-
-Overriding is useful because it allows us to define a method in the child class that has the same name and signature as the method in the parent class. This allows us to call the same method on different types of objects and get different results.
-
-Let's **override** the `doWork()` method in the `Student` class.
-
-In the `Student` class file, right click, "Source Action, "Override/Implement Methods...".
-
-```java
-@Override
-public void doWork() {
-  System.out.println(this.name + " is studying.");
+public Person(String name, int age, String gender, boolean isMarried) {
+  this.name = name;
+  this.age = age;
+  this.gender = gender;
+  this.isMarried = isMarried;
 }
 ```
 
-Now when we run the following code, the `doWork()` method in the `Student` class will be called instead of the `doWork()` method in the `Person` class.
+With the constructor defined, we can now instantiate the `Person` object with the values that we want.
 
 ```java
-student.doWork();
-```
+public class App {
+  public static void main(String[] args) {
+    Person tony = new Person("Tony Stark", 35, "male", false);
 
-#### The `@Override` annotation
+    tony.greet();
+    tony.eat("burger");
 
-The `@Override` annotation is used to indicate that a method is being overridden. It is not required but it is good practice to use it.
-
-This is because without the annotation, if we accidentally misspell the method name or change the method signature, the compiler will not be able to detect it and we will not get any error messages.
-
-```java
-// @Override
-public void doWerk() {
-  System.out.println(this.name + " is studying.");
-}
-```
-
-And then when we run the following code, the `doWork()` method in the `Person` class will be called.
-
-```java
-Person student = new Student("John", 2000, 12345, "Computer Science", 2020);
-student.doWork(); // I am working.
-```
-
-#### Runtime Polymorphism with `super`
-
-In some cases, we may want to call the parent class method from the child class, in addition to defining a new behavior in the child class.
-
-We can call the parent class method from the child class using the `super` keyword.
-
-```java
-public class Student extends Person {
-  @Override
-  public void doWork() {
-    super.doWork();
-    System.out.println("I am studying.");
   }
 }
 ```
 
-### 👨‍💻 Activity: Polymorphism
+Note that if an explicit constructor is defined, there will no longer be a default constructor implicitly defined.
 
-Override the `doWork()` method in the `Teacher` class to say that the teacher is teaching.
+Remove the no-argument constructor and try to instantiate the `Person` object again without any arguments. What happens?
 
-Also, override the `greet()` method in the `Teacher` class to say what the teacher teaches, in addition to the original greeting.
+### What is `this`?
 
-Test code:
+The `this` keyword is used to refer to the current instance in a method or constructor.
+
+In the `Person` class, we now have a constructor that takes in 4 parameters.
 
 ```java
-Teacher teacher = new Teacher("John", 1975, 1, "Mathematics", 5000);
-teacher.greet();
-teacher.doWork();
+public Person(String name, int age, String gender, boolean isMarried)
 ```
 
-Example output:
+However, the parameters have the same name as the attributes. How does Java know e.g., whether the `name` variable refers to the argument or the attribute?
 
-```bash
-# teacher.doWork() output
-John is teaching.
-# teacher.greet() output
-👋 Hello, my name is John and I am a 48 year old teacher.
-Also, I teach Mathematics.
+This is where the `this` keyword comes in. The `this` keyword refers to the current instance of the object. It can be used to refer to the attributes and methods of the object.
+
+Using a constructor with arguments, we can initialize the attributes of the object with the values passed in.
+
+### Constructor Overloading
+
+We can define multiple constructors for a class. This is called **constructor overloading**.
+
+In our previous lesson, we learned method overloading. The constructor is also a method, so we can apply the same concept here.
+
+For example, we can define a constructor to take in two parameters and set default values for the other attributes.
+
+```java
+public Person(String name, int age) {
+  this.name = name;
+  this.age = age;
+  this.gender = "Unknown";
+  this.isMarried = false;
+}
+```
+
+We could improve this further by calling the all-argument constructor from the two-argument constructor. Remember that our constructor is a method, so we can call it from another method.
+
+```java
+public Person(String name, int age) {
+  this(name, age, "Unknown", false);
+}
+```
+
+Test it out by instantiating the `Person` object with two arguments.
+
+```java
+Person bruce = new Person("Bruce Banner", 40);
+
+bruce.greet();
+bruce.eat("popcorn");
+```
+
+### Copy Constructor
+
+A **copy constructor** is a constructor that takes in an object of the same class and copies its values to the new object. This is actually just another overloaded constructor.
+
+```java
+public Person(Person person) {
+  this.name = person.name;
+  this.age = person.age;
+  this.gender = person.gender;
+  this.isMarried = person.isMarried;
+}
+```
+
+Or we can call the all-argument constructor.
+
+```java
+public Person(Person person) {
+  this(person.name, person.age, person.gender, person.isMarried);
+}
+```
+
+Then to invoke the copy constructor, we pass in an object of the same class.
+
+```java
+Person bruceClone = new Person(bruce);
 ```
 
 ---
 
-## Part 4: Abstraction
+## 👨‍💻 Activity
 
-Abstraction is when we generalize a set of characteristics and behaviors into a class.
+Create a `Car` class with the following attributes:
 
-For example, animals, vehicles, products, etc. are all abstract concepts. They are not tangible objects that we can touch or see. Of course, we know examples of vehicles such as cars, vans, lorries, buses but these are all more concrete objects. But it would be hard to say, draw a vehicle, without knowing what type of vehicle we are talking about. So, we say that a vehicle is an abstract concept.
+- `String make`
+- `String model`
+- `int year`
+- `double price`
 
-Abstraction helps us to think about things as groups and generalize their functionalities.
+Create the following constructors:
 
-We can do abstraction in Java using:
+- no-argument constructor
+- constructor that takes in `make`, `model`, `year` and `price`
+- constructor that takes in `make`, `model` and `year` and sets the price to 0
+- copy constructor
 
-- Abstract classes
-- Interfaces
-- Superclasses
+---
 
-### Abstract Classes
+## Part 3: Encapsulation, Accessor and Mutator Methods
 
-An abstract class is a class that is declared with the `abstract` keyword. It can have abstract and non-abstract methods.
+In the previous lesson, we learned how to use access modifiers to control access to methods. We can also use access modifiers to control access to attributes. We refer to class attributes and methods as **class members**.
 
-An abstract method is a method that is declared without an implementation. It is declared with the `abstract` keyword. The implementation **must** be provided by the subclass.
+| Access Keyword | Description                                     |
+| -------------- | ----------------------------------------------- |
+| `public`       | accessible from anywhere                        |
+| `private`      | accessible only from within the class           |
+| `protected`    | accessible from within the class and subclasses |
+| blank          | accessible from within the class and package    |
 
-An abstract class cannot be instantiated. It can only be used as a superclass for other classes.
-
-In the case of our `Person` class, we can make it an abstract class because we do not intend to instantiate it. We only want to use it as a superclass for other subclasses.
-
-We can also make the `doWork()` method `abstract` because we do not want to define the behavior of the `doWork()` method in the `Person` class. We want to define the behavior of the `doWork()` method in the child classes.
+Currently, we can access attributes directly from the `App` class.
 
 ```java
-public abstract class Person {
-  // ...
+System.out.println(tony.name);
+System.out.println(tony.age);
+System.out.println(tony.gender);
+System.out.println(tony.isMarried);
+```
 
-  public abstract void doWork();
+Generally, we should keep all fields private because we do not want other classes to be able to access and modify the values directly.
+
+```java
+private String name;
+private int age;
+private String gender;
+private boolean isMarried;
+```
+
+The moment we do this though, we will get an error in the `App` class because we can no longer access the attributes directly. This is because the attributes are now set to `private`.
+
+How do we access them then? This is where **accessor** and **mutator** methods come in. These are more commonly known as **getters** and **setters** respectively. These methods are used to access and modify the values of the attributes.
+
+A getter method is used to retrieve the value of an attribute. It is a public method that returns the value of the attribute.
+
+```java
+public String getName() {
+  return name;
 }
 ```
 
-Once we declare `Person` as `abstract`, it can only be used as a superclass for other classes.
-
-Now when we try to instantiate the `Person` class, we will get an error.
+A setter method is used to change the value of an attribute. It is a public method that takes in a parameter and sets the value of the attribute.
 
 ```java
-Person person = new Person("Tony Stark", 2000, 12345);
-```
-
-### Interfaces
-
-An **interface** is a similar concept to an abstract class. It is declared with the `interface` keyword. Unlike abstract classes though, an interface cannot have instance variables. From Java 8 onwards, it can also have default methods and static methods.
-
-An interface can be named in different ways depending on what it represents:
-
-1. **Capability/Behavior interfaces** - Often named with the suffix `able` to indicate what a class can do:
-
-   - Examples: `Drivable`, `Runnable`, `Comparable`, `Trackable`
-
-2. **Contract/Type interfaces** - Named as nouns to define what something is:
-
-   - Examples: `List`, `Map`, `Set`, `Building`, `Vehicle`
-
-3. **Service interfaces** - Named to represent services or operations:
-   - Examples: `Repository`, `Service`, `Handler`, `Manager`
-
-The key is that interface names should clearly communicate the contract or capability they define.
-
-Interfaces allow us to specify what a class must do, without specifying how it should do it.
-
-Using interfaces allows us to define a common behaviour that can be shared among multiple classes. This is useful when we want to define a common behavior for classes that are not related to each other.
-
-For example, we might want to have a common behaviour, say `Trackable` for a `Car` as well as a `MobilePhone`. The `Car` and the `MobilePhone` are not related conceptually but yet we may need to implement a trackable behaviour for both. We can define a `Trackable` interface and have both the `Car` and `MobilePhone` classes implement the `Trackable` interface.
-
-Create a file `LearnInterfaces.java` and code along. If you wish to do it in a single file, just omit the `public` keyword for the following interface and classes.
-
-```java
-public interface Trackable {
-  // public abstract void track();
-  // public and abstract are not required
-  void track();
+public void setName(String name) {
+  this.name = name;
 }
 ```
 
-Any method declared in an interface is by default `public` and `abstract`. So, we do not need to specify the `public` and `abstract` keywords.
+The naming convention for getters and setters is to prefix the attribute name with `get` and `set` respectively, except for boolean attributes. For boolean attributes, the prefix should be `is` instead of `get` e.g. `isMarried`.
 
-To use the `Trackable` interface, we need to implement it in the `Car` and `MobilePhone` classes with the `implements` keyword.
+In VSCode, we do not have to type these out but can instead generate them by right-clicking, "Source Action", "Generate Getters and Setters".
 
 ```java
-public class Car implements Trackable {
+public String getName() {
+  return name;
+}
+
+public void setName(String name) {
+  this.name = name;
+}
+
+public int getAge() {
+  return age;
+}
+
+public void setAge(int age) {
+  this.age = age;
+}
+
+public String getGender() {
+  return gender;
+}
+
+public void setGender(String gender) {
+  this.gender = gender;
+}
+
+public boolean isMarried() {
+  return isMarried;
+}
+
+public void setMarried(boolean isMarried) {
+  this.isMarried = isMarried;
+}
+```
+
+Now, we can access the attributes using these methods.
+
+```java
+System.out.println(tony.getName());
+System.out.println(tony.getAge());
+System.out.println(tony.getGender());
+System.out.println(tony.isMarried());
+```
+
+We could also set the values using the setter methods.
+
+```java
+tony.setName("Tony Stuck");
+tony.setAge(25);
+```
+
+It is good practice to keep fields private and provide getters and setters to access and modify the values because it allows us to control how the values are accessed and modified.
+
+This is one of the principles of Object Oriented Programming (OOP) - **Encapsulation**.
+
+<img src="https://files.prepinsta.com/2023/05/Encapsulation.webp" width=500>
+
+Source: https://prepinsta.com/java/encapsulation/
+
+In OOP, encapsulation means two things:
+
+1. The bundling of methods and attributes on a single object
+2. The hiding of the internal representation, or state, of an object from the outside
+
+The methods are usually public because we want to give users a way to interact with the object. The attributes are usually private because we do not want users to be able to access and modify the values directly.
+
+This encapsulates our class which allows us to provide a public interface that never changes while the implementation details can change at any time without affecting the users.
+
+For example, we might change the implementation of the `greet` method include the marital status. Or we might change the implementation of the `isMarried` attribute to return a string instead of a boolean.
+
+```java
+public void greet() {
+  System.out.println("Hello world, I'm " + getName() + " and I'm a " + getAge() + " year old " + getGender() + ".");
+  System.out.println(isMarried() ? "I'm married." : "I'm not married.");
+}
+```
+
+To the users, the interface remains the same regardless of the changes. They can still call the `greet` method and get the same result.
+
+---
+
+## Part 4: `static` Keyword
+
+In the previous lesson we used the `static` keyword on methods. We can also use it on attributes.
+
+Just like methods, `static` attributes are accessed using the class name while instance attributes are accessed using the object name.
+
+Let's define a `static` attribute.
+
+```java
+public static final String scientificName = "Homo Sapien";
+```
+
+The `final` keyword is used to restrict modification of the variable.
+
+And access them in our `main` method.
+
+```java
+// Printing out a static variable
+System.out.println(Person.scientificName);
+```
+
+Let's add another static variable to keep track of the number of Person objects instantiated.
+
+```java
+private static int personCount = 0;
+```
+
+And a corresponding static method to get the value.
+
+```java
+public static int getPersonCount() {
+  return personCount;
+}
+```
+
+Now, we will increment it every time a new Person is instantiated.
+
+```java
+public Person(String name, int age, String gender, boolean isMarried) {
+  this.name = name;
+  this.age = age;
+  this.gender = gender;
+  this.isMarried = isMarried;
+  personCount++;
+}
+```
+
+We can now instantiate a few more persons and use the static method to display the count.
+
+```java
+Person peter = new Person("Peter Parker", 20, "male", false);
+Person wanda = new Person("Wanda Maximoff", 25, "female", true);
+
+System.out.println(Person.getPersonCount());
+
+// Should not use instance to call a static method
+System.out.println(peter.getPersonCount());
+```
+
+It is usually not recommended to call a static member with an instance variable instead of the class name. This is because it can be confusing and make the code less readable.
+
+Static members are associated with the class, not with any particular instance of the class. Therefore, it is more consistent to access them using the class name. This also makes it clear that the member is static, which can be important for understanding the code.
+
+---
+
+## Part 5: `toString` and `@Override`
+
+By default, if we try to print out an object, we will get the class name and the hashcode.
+
+```java
+System.out.println(tony);
+```
+
+We can override the `toString` method to return a string representation of the object. With VSCode, we can generate the `toString` method by right-clicking, "Source Action", "Generate toString()".
+
+```java
+@Override
+public String toString() {
+  return "Person [name=" + name + ", age=" + age + ", gender=" + gender + ", isMarried=" + isMarried + "]";
+}
+```
+
+The `@Override` annotation is used to indicate that the method is overriding a method from the superclass. This is optional but it is good practice to include it. We will learn more about annotations in later lessons.
+
+---
+
+## 👨‍💻 Activity
+
+Continue with the `Car` class from the previous activity.
+
+1. Encapsulate the attributes and provide accessor and mutator methods.
+1. Add a `static` attribute to keep track of the number of cars instantiated and a corresponding static method to get the value.
+1. Override the `toString` method to return a string representation of the object.
+
+---
+
+## Part 6: Intro to the POJO
+
+A Plain Old Java Object (POJO) is a simple object used to represent data in a Java program.
+
+We define it using the `class` keyword with a set of attributes and corresponding getters and setters.
+
+Take for example, an expense object.
+
+```java
+public class Expense {
   private String name;
-  private int year;
+  private double amount;
 
-  public Car() {
+  public Expense() {
+
   }
 
-  public Car(String name, int year) {
+  public Expense(String name, double amount) {
     this.name = name;
-    this.year = year;
-  }
-
-  @Override
-  public void track() {
-    System.out.println("Tracking car " + this.name + " from " + this.year + ".");
+    this.amount = amount;
   }
 
   public String getName() {
-    return this.name;
+    return name;
   }
 
   public void setName(String name) {
     this.name = name;
   }
-}
-```
 
-```java
-public class MobilePhone implements Trackable {
-  private String model;
-
-  public MobilePhone() {
+  public double getAmount() {
+    return amount;
   }
 
-  public MobilePhone(String model) {
-    this.model = model;
-  }
-
-  @Override
-  public void track() {
-    System.out.println("Tracking mobile phone " + this.model + ".");
+  public void setAmount(double amount) {
+    this.amount = amount;
   }
 }
 ```
 
-And test it out with the following code.
+We could then create an `ArrayList` of expenses.
 
 ```java
-Car car = new Car("Toyota", 2022);
-car.track();
+ArrayList<Expense> expenses = new ArrayList<>();
 
-MobilePhone phone = new MobilePhone("iPhone 14");
-phone.track();
+expenses.add(new Expense("Food", 100));
+expenses.add(new Expense("Transport", 500));
+System.out.println(expenses);
 ```
 
-Unlike inheritance, a class can implement multiple interfaces. A car can be `Trackable` as well as `Drivable`.
+But we will not be able to see the data. This is because the `toString` method is not overridden in the `Expense` class. So we can either override the `toString` method or loop through the `ArrayList` and print out the values.
 
-Let's define a `Drivable` interface.
+By using a POJO, we can easily create objects to represent our data instead of using arrays or ArrayLists of strings or numbers. We could also use it to pass data between components or store data in a database.
+
+---
+
+## Part 7: Intro to the Record
+
+The Record is a new feature introduced in Java 14. It is a new type of class that is designed to be a simple and concise way to create classes whose main purpose is to hold data.
+
+Creating a record is similar to creating a POJO. We use the `record` keyword instead of the `class` keyword.
 
 ```java
-public interface Drivable {
-  void drive();
-  void stop();
-
-  // Java 8 onwards - default method
-  default void honk() {
-    System.out.println("Honk!");
-  }
-}
+public record Expense(String name, double amount) {}
 ```
 
-Default methods were added in Java 8. This was because previously it was not possible to add new methods to an interface without breaking the existing implementations of the interface.
+This `Record` has two attributes - `name` and `amount`. These attributes are `private` and `final` by default. This means that they cannot be modified once the object is created.
 
-Now, the classes that implement the interface can choose to override the default method with their own implementation, or they can simply use the default implementation.
+It also has a constructor that takes in two parameters and sets the values of the attributes.
+
+To access the fields, we can use the getter methods, which are automatically generated.
 
 ```java
-public class Car implements Trackable, Drivable {
-  // ...
-  @Override
-  public void track() {
-    System.out.println("Tracking car...");
-  }
+Expense expense = new Expense("Food", 10.5);
 
-  @Override
-  public void drive() {
-    System.out.println("Driving car...");
-  }
-
-  @Override
-  public void stop() {
-    System.out.println("Stopping car...");
-  }
-}
+System.out.println(expense.name());
+System.out.println(expense.amount());
 ```
 
-Test the `Car` class with the following code.
+The `toString` method is also automatically generated. We can print out the previous `ArrayList` of expenses and see the data.
 
-```java
-Car car = new Car("Toyota", 2022);
-car.track();
-car.drive();
-car.stop();
-car.honk();
-```
+---
 
-### 👨‍💻 Activity: Abstraction
+## 👨‍💻 Activity
 
-In this activity, you will practice working with abstract class and interfaces.
+With our new knowledge of classes, let's work on the VendingMachine project again.
 
-Create an `abstract` class `Vehicle`. There will be 2 child classes `Car` and `ElectricCar` that will extend the `Vehicle` class.
+This time, we will create a `VendingMachine` class to represent the vending machine.
 
-```java
-public abstract class Vehicle {
-  private String make;
+It should have the following attributes:
 
-  // Add your constructors, getters and setters
-}
-```
+- `String location` - location of vending machine
+- `double earnings` - total earnings of machine
+- `double balance` - how much money user has inserted
 
-There are 4 interfaces that can be implemented: `Drivable`, `Trackable`, `FuelTank` and `BatteryPack`.
+It should have a constructor that takes the location as a parameter and initializes the earnings and balance to 0.
 
-```java
-interface Drivable {
-  void drive();
-  void stop();
-}
+Methods:
 
-interface Trackable {
-  void track();
-}
-
-interface FuelTank {
-  void fill();
-  double getFuelLevel();
-}
-
-interface BatteryPack {
-  void charge();
-  double getCharge();
-}
-```
-
-All vehicles are `Drivable` and `Trackable`. A `Car` should implement `FuelTank` and an `ElectricCar` should implement a `BatteryPack`.
-
-To show that the interface can be used across unrelated classes, create a `MobilePhone` class that implements `Trackable` and `BatteryPack`. And an `RCCar` (remote controlled car) that implements `Drivable` and `BatteryPack`.
+- `insertCoin` - for receiving payment
+- `selectDrink` - for selecting a drink
+- `getPrice` - for getting the price of a drink
+- `dispenseDrink` - for dispensing a drink
+- `printEarnings` - prints out the total earnings
 
 Test code:
 
 ```java
-Car car = new Car("Toyota");
-car.track();
-car.drive();
-car.stop();
-car.fill();
-car.getFuelLevel();
+VendingMachine ntuVendingMachine = new VendingMachine("NTU");
 
-ElectricCar electricCar = new ElectricCar("Tesla");
-electricCar.track();
-electricCar.drive();
-electricCar.stop();
-electricCar.charge();
-electricCar.getCharge();
+ntuVendingMachine.insertCoin(1);
+ntuVendingMachine.selectDrink(Drink.COKE); // should not dispense, insufficient payment
+ntuVendingMachine.insertCoin(0.5);
+ntuVendingMachine.selectDrink(Drink.COKE);
 
-MobilePhone phone = new MobilePhone();
-phone.charge();
-phone.getCharge();
+ntuVendingMachine.insertCoin(0.5); // should not dispense, insufficient payment
+ntuVendingMachine.selectDrink(Drink.WATER);
+ntuVendingMachine.insertCoin(1);
+ntuVendingMachine.selectDrink(Drink.WATER);
 
-RCCar rcCar = new RCCar();
-rcCar.drive();
-rcCar.stop();
-rcCar.charge();
-rcCar.getCharge();
+ntuVendingMachine.printEarnings();
 ```
 
-### Interfaces vs Abstract Classes
-
-You may have noticed that interfaces can be nouns, just like abstract classes. So, when should we use an interface and when should we use an abstract class?
-
-```java
-public interface Vehicle {
-  void start();
-  void stop();
-}
-
-public abstract class Vehicle {
-  abstract void start();
-  abstract void stop();
-}
-```
-
-Use an interface when:
-
-- You want to define a contract that can be implemented by any class, regardless of its position in the class hierarchy.
-- You need to implement multiple behaviors in a class, as a class can implement multiple interfaces.
-
-Use an abstract class when:
-
-- You want to provide a common base implementation for a group of related classes.
-- You need instance variables or methods that can be shared among subclasses.
-
-## Part 5: Composition
-
-Another concept of OOP is composition. Building a class out of simpler classes is called composition. It is a way to combine simple objects or data types into more complex ones.
-
-To prefer **composition over inheritance** is an OOP principle that means that we should prefer to compose classes rather than inherit from them.
-
-For more info: https://en.wikipedia.org/wiki/Composition_over_inheritance
-
-Composition allows us to reuse code without having to inherit from a class. Inheritance is a tightly coupled relationship. If we inherit from a class, we are tightly coupled to that class. If the superclass changes, the subclass will also be affected.
-
-Composition is a loosely coupled relationship. If we compose a class, we are not tightly coupled to that class. If the composed class changes, the class that uses it will not be affected.
-
-Sometimes it is easier to model real-world objects using composition than trying to find commonalities between them and using inheritance.
-
-For example, a car is composed of an engine, wheels, seats, etc. A car is not a type of engine or a type of wheel. A car has an engine and wheels.
-
-Inheritance defines a **IS-A** relationship. Composition defines a **HAS-A** relationship. A car **IS-A** vehicle. A car **HAS-A** engine.
-
-Let's say we have a `Radio` class now. One way for our `Car` and `ElectricCar` to have a radio is to put it in the `Vehicle` class. But not all vehicles have a radio.
-
-Instead, we can create a `Radio` class and add it in the `Car` and `ElectricCar` classes.
-
-We do not want to define the `Radio` in the `Vehicle` class as that would mean all child classes would have a `Radio`. We would also not want to define the Radio in the `Car` and `ElectricCar` classes as we would be repeating code.
-
-```java
-public class Radio {
-  private String model;
-
-  public Radio(String model) {
-    this.model = model;
-  }
-
-  public String getModel() {
-    return this.model;
-  }
-
-  public void setModel(String model) {
-    this.model = model;
-  }
-
-  public void play() {
-    System.out.println("Playing radio...");
-  }
-
-  public void stop() {
-    System.out.println("Stopping radio...");
-  }
-}
-```
-
-```java
-public class Car {
-  private String make;
-  private Radio radio;
-
-  public Car(String make) {
-    this.make = make;
-    this.radio = new Radio("Sony");
-  }
-
-  public void drive() {
-    System.out.println("Driving car...");
-  }
-
-  public void stop() {
-    System.out.println("Stopping car...");
-  }
-
-  public void playRadio() {
-    this.radio.play();
-  }
-}
-```
-
-```java
-public class ElectricCar {
-  private String make;
-  private Radio radio;
-
-  public ElectricCar(String make) {
-    this.make = make;
-    this.radio = new Radio("Sony");
-  }
-
-  public void drive() {
-    System.out.println("Driving electric car...");
-  }
-
-  public void stop() {
-    System.out.println("Stopping electric car...");
-  }
-
-  public void playRadio() {
-    this.radio.play();
-  }
-}
-```
+Optional Challenge: Store the transactions history.
 
 ---
 
