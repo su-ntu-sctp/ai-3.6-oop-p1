@@ -1,34 +1,42 @@
 # Assignment (Optional)
 
 ## Brief
-[1–2 sentences: what to build and the expected outcome.]
 
-## Tasks
-- [Task 1]
-- [Task 2]
-- [Optional extension]
+Create a program called OOPAssignment.java and solve the following problems using classes, constructors, encapsulation, and OOP principles.
 
-## Setup
-- [Starter/template link if any]
-- [Install & run steps (3–5 lines)]
-- [Sample I/O or endpoints]
+1. **Book Class with Encapsulation**
+   - Create a `Book` class with the following private attributes:
+     - `String title`
+     - `String author`
+     - `double price`
+     - `int stock`
+   - Create the following constructors:
+     - A parameterized constructor that takes in all four attributes
+     - A constructor that takes in `title` and `author`, and sets price to 0.0 and stock to 0
+     - A copy constructor
+   - Implement proper getter and setter methods for all attributes
+   - Add a static variable `totalBooks` to count the number of Book objects created
+   - Add a static method `getTotalBooks()` to return the count
+   - Override the `toString()` method to display book information
+   - Create at least 3 Book objects in your main method and test all the methods
 
-## Deliverables (if submitting)
-- GitHub repo URL
-- README (setup, notes, screenshots)
-- Demo link (optional)
+2. **Student Grade Manager (POJO/Record)**
+   - Create a `Student` class (or Record) with the following attributes:
+     - `String name`
+     - `int studentId`
+     - `double grade`
+   - Create an `ArrayList` to store at least 5 Student objects
+   - Add methods or functionality to:
+     - Add students to the list
+     - Display all students
+     - Find and display the student with the highest grade
+     - Calculate and display the average grade of all students
+   - Test your implementation by creating students, adding them to the list, and displaying the results
 
-## AI & Tools
-- Tools: [ChatGPT/Copilot/etc.]
-- Assisted with: [tests/docs/code]
-- Validation: [tests/manual checks]
-- Attribution: [links to adapted sources]
+## Submission (Optional)
 
-## Collaboration
-- Discuss ideas, submit your own work; credit classmates/sources.
-
-## Submission (optional)
-- Submit repo URL to NTU Blackboard.
+- Submit the URL of the GitHub Repository that contains your work to NTU black board.
+- Should you reference the work of your classmate(s) or online resources, give them credit by adding either the name of your classmate or URL.
 
 ## References
 - Java: https://docs.oracle.com/javase/
